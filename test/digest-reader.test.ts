@@ -22,12 +22,14 @@ describe('readNight', () => {
       owner: 'rook',
       runs: 4,
       retries: 3,
+      fails: 0,
       lastStatus: 'ok',
       lastError: null,
       firstAt: '2026-10-29T01:30:00+01:00',
       lastAt: '2026-10-29T01:37:00+01:00',
     });
     expect(night!.rows.find((r) => r.job === 'notes/backup')).toMatchObject({
+      fails: 1,
       lastStatus: 'fail',
       lastError: 'quota exceeded',
     });
