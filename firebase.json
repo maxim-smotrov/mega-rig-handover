@@ -1,0 +1,7 @@
+{
+  "hosting": {
+    "public": "var/preview",
+    "ignore": ["**/.*"],
+    "headers": [{ "source": "**", "headers": [{ "key": "Cache-Control", "value": "no-cache" }] }]
+  }
+}

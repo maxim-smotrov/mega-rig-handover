@@ -4,6 +4,7 @@ import { createApp } from './app.js';
 
 // Saves one rig page as a self-contained HTML file for review (ADR 0001, 0003). The banner
 // carries LANE_MARKER from the environment; run it with LANE_MARKER unset for the clean copy.
+// Publish with `firebase deploy --only hosting` (firebase.json serves var/preview).
 // Usage: pnpm preview [path] [outFile]
 const [path = '/digest/2026-10-28', outFile = 'var/preview/index.html'] = process.argv.slice(2);
 
