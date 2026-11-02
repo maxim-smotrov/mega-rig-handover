@@ -14,21 +14,60 @@ in a shell this agent can run.
 2. Draft the split as a table: title · plan section · scope · done when · blocked by.
    One issue per unit of work.
 3. **Stop and show the table to the human.** Publish nothing until they approve it.
-4. Ask the human what every issue here must carry (fields, labels, wording), unless it is
-   already written down in this session or in the repo.
-5. Create each issue in dependency order, so blocked-by can cite real numbers:
+4. Every issue carries the shape in "What every issue carries" below. Ask the human only for
+   anything this plan needs on top of it.
+5. Create the `plan:<plan>` label if it is missing, then each issue in dependency order, so
+   blocked-by can cite real numbers:
 
    ```sh
-   gh issue create --title "<title>" --body-file <tmp.md>
+   gh issue create --title "<title>" --label "plan:<plan>" --body-file <tmp.md>
    ```
 
 6. Record every issue URL from gh's output (not from memory) and reply with the list.
 
-Closing one, with the closing comment from AGENTS.md:
+## What every issue carries
+
+Agreed with the human on the morning-digest plan (2026-11-02). `<plan>` is the `plan:` value in
+`plan.md`'s frontmatter; `<n>` is the plan section, sub-sections included (`2a`).
+
+- Label `plan:<plan>`. Reviewers sort by it.
+- Body, in this order:
+
+  ```md
+  Source: plan.md § <n>
+
+  ## Scope
+
+  What to build, and the decisions it must follow (ADRs, styleguide).
+
+  ## Done when
+
+  The plan's done condition, checkable.
+
+  ## Blocked by
+
+  `#<n>` with real numbers, or `—`. Say when only part of an issue is needed
+  (e.g. "#1, only its first commit").
+
+  ## Worker
+
+  Suggested model: the strongest for logic, a cheaper one for views and tests.
+  ```
+
+- `Source:` is the body's first line, exactly as above.
+- A step that waits on someone outside the repo (a reviewer, a human) stays open until they
+  confirm, even if its done line says "sent". The issue that depends on it is blocked by it.
+
+## Closing
+
+With the closing comment from AGENTS.md:
 
 ```sh
 gh issue close <n> -c "<closing comment>"
 ```
+
+A commit with `closes #n` closes the issue on push without that comment. Add it afterwards with
+`gh issue comment <n> -b "<closing comment>"`.
 
 ## No `gh`
 
